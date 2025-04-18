@@ -31,7 +31,7 @@ jobs:
         id: check_update
         shell: bash
         run: |
-          if [[ "${{ inputs.FORCE_REBUILD }}" -eq "true" ]]; then
+          if [ "${{ inputs.FORCE_REBUILD }}" = "true" ]; then
             echo "FORCE_REBUILD is true, skipping update check"
             echo "res=0" >> "$GITHUB_ENV"
           fi
