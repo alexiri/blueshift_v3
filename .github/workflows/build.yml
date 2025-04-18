@@ -34,6 +34,7 @@ jobs:
           if [ "${{ inputs.FORCE_REBUILD }}" = "true" ]; then
             echo "FORCE_REBUILD is true, skipping update check"
             echo "res=-1" >> "$GITHUB_ENV"
+            exit
           fi
 
           # 'dnf check-update'
