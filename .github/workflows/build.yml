@@ -43,7 +43,7 @@ jobs:
           #   125 - tag/platform not found
           #   127 - command not found
           res=0
-          podman run --quiet --rm ${{ env.IMAGE_DEST }}/${{ env.IMAGE_NAME }}:${{ matrix.VERSION_MAJOR }} dnf check-update || res=$?
+          podman run --quiet --rm ghcr.io/${{ github.repository_owner }}/blueshift_v3:10 dnf check-update || res=$?
           echo "res=${res}" >> "$GITHUB_ENV"
           echo "Exit code: '$res'"
 
