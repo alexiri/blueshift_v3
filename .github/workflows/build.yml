@@ -77,3 +77,10 @@ jobs:
 
           # enabled by default, disable if your image is small and you want faster builds
           maximize_build_space: true
+          rechunk: true
+
+      - name: "Build ISO"
+        shell: bash
+        run: |
+          # Build the ISO image
+          sudo bluebuild generate-iso --iso-name blueshift_v3.iso image ghcr.io/${{ github.repository_owner }}/blueshift_v3:10
