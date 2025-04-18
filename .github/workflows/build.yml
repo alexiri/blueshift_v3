@@ -31,7 +31,7 @@ jobs:
         id: check_update
         shell: bash
         run: |
-          if [ "${{ inputs.FORCE_REBUILD }}" -eq "true" ]; then
+          if [[ "${{ inputs.FORCE_REBUILD }}" -eq "true" ]]; then
             echo "FORCE_REBUILD is true, skipping update check"
             echo "res=0" >> "$GITHUB_ENV"
           fi
@@ -50,6 +50,8 @@ jobs:
   bluebuild:
     name: Build Custom Image
     runs-on: ubuntu-latest
+    needs: check_update
+    if: needs.check_update.outputs.res == '0'
     permissions:
       contents: read
       packages: write
