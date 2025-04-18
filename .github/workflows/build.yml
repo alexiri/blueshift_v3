@@ -10,11 +10,43 @@ on:
 
   pull_request:
   workflow_dispatch: # allow manually triggering builds
+    inputs:
+      FORCE_REBUILD:
+        description: "Force rebuild even if no changes were made"
+        required: false
+        default: false
+        type: boolean
+
 concurrency:
   # only run one build at a time
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
+
 jobs:
+  check_update:
+    name: Check for Updates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for Updates
+        id: check_update
+        shell: bash
+        run: |
+          if [ "${{ inputs.FORCE_REBUILD }}" -eq "true" ]; then
+            echo "FORCE_REBUILD is true, skipping update check"
+            echo "res=0" >> "$GITHUB_ENV"
+          fi
+
+          # 'dnf check-update'
+          # exit codes:
+          #   0 - no updates
+          #   100 - updates available
+          #   125 - tag/platform not found
+          #   127 - command not found
+          res=0
+          podman run --quiet --rm ${{ env.IMAGE_DEST }}/${{ env.IMAGE_NAME }}:${{ matrix.VERSION_MAJOR }} dnf check-update || res=$?
+          echo "res=${res}" >> "$GITHUB_ENV"
+          echo "Exit code: '$res'"
+
   bluebuild:
     name: Build Custom Image
     runs-on: ubuntu-latest
