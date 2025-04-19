@@ -20,7 +20,10 @@ modules:
   - type: script
     snippet:
       - dnf install -y epel-release
-      - dnf install -y '@Workstation'
+      - dnf install -y @Workstation
+
+  - type: script
+    snippet:
       - systemctl enable gdm
 
   - type: rpm-ostree
