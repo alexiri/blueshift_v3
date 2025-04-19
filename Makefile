@@ -62,6 +62,7 @@ image:
 		quay.io/centos-bootc/bootc-image-builder:latest \
 		--type $(IMAGE_TYPE) \
 		--use-librepo=$$LIBREPO \
+		--progress verbose \
 		$(SOURCE_IMAGE_REF)
 
 	$(SUDO) chown -R $(USER):$(USER) ./output
