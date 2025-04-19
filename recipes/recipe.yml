@@ -18,12 +18,9 @@ modules:
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
   - type: script
-    snippet:
+    snippets:
       - dnf install -y epel-release
       - dnf install -y @Workstation
-
-  - type: script
-    snippet:
       - systemctl enable gdm
 
   - type: rpm-ostree
