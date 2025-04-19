@@ -68,7 +68,7 @@ jobs:
     steps:
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
-        if: false # temporarily disable this step
+        #if: false # temporarily disable this step
         uses: blue-build/github-action@v1.8
         with:
           recipe: ${{ matrix.recipe }}
