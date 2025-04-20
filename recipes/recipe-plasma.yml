@@ -19,17 +19,17 @@ modules:
       - dnf install -y -x plasma-discover-packagekit @"KDE Plasma Workspaces" falkon
       - sed -i \
         's,Image=Next,Image=Alma-default,g' \
-        /usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/defaults
+        /usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/defaults || true
       - sed -i \
         's,Image=Next,Image=Alma-default,g' \
-        /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop/contents/defaults
+        /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop/contents/defaults || true
       - sed -i \
         's,Image=Next,Image=Alma-default,g' \
-        /usr/share/plasma/look-and-feel/org.kde.breezetwilight.desktop/contents/defaults
+        /usr/share/plasma/look-and-feel/org.kde.breezetwilight.desktop/contents/defaults || true
       - sed -i \
         's,start-here-kde-symbolic,fedora-logo-icon,g' \
-        /usr/share/plasma/plasmoids/org.kde.plasma.kickoff/contents/config/main.xml
+        /usr/share/plasma/plasmoids/org.kde.plasma.kickoff/contents/config/main.xml || true
       - sed -i \
         's,background=/usr/share/wallpapers/Next/contents/images/5120x2880.png,background=/usr/share/wallpapers/Alma-default/contents/images/3840x2160.png,g' \
-        /usr/share/sddm/themes/breeze/theme.conf
+        /usr/share/sddm/themes/breeze/theme.conf || true
       - systemctl enable sddm
