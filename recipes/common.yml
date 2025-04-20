@@ -10,13 +10,12 @@ modules:
   - type: rpm-ostree
     install:
       - epel-release
-    remove:
-      - console-login-helper-messages
 
   - type: script
     snippets:
       - crb enable
       - rpm --import /etc/pki/rpm-gpg/*
+      - dnf remove -y console-login-helper-messages
 
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
