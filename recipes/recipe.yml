@@ -3,7 +3,7 @@
 # image will be published to ghcr.io/<user>/<name>
 name: blueshift_v3
 # description will be included in the image's metadata
-description: This is my personal OS image.
+description: AlmaLinux 10 Atomic Workstation with Gnome
 
 # the base image to build on top of (FROM) and the version tag to use
 base-image: quay.io/almalinuxorg/almalinux-bootc
@@ -12,30 +12,9 @@ image-version: 10-kitten # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
-  - type: files
-    files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+  - from-file: common.yml
 
   - type: script
     snippets:
-      - dnf install -y epel-release
-      - crb enable
-      - rpm --import /etc/pki/rpm-gpg/*
       - dnf install -y @Workstation
       - systemctl enable gdm
-      - dnf remove -y console-login-helper-messages
-
-  - type: default-flatpaks
-    notify: true # Send notification after install/uninstall is finished (true/false)
-    system:
-      # If no repo information is specified, Flathub will be used by default
-      install:
-        - org.mozilla.firefox
-        - org.gnome.Loupe
-      remove:
-        - org.gnome.eog
-    user: {} # Also add Flathub user repo, but no user packages
-
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
-
