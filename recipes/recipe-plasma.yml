@@ -1,0 +1,35 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to ghcr.io/<user>/<name>
+name: blueshift_v3-plasma
+# description will be included in the image's metadata
+description: AlmaLinux 10 Atomic Workstation with Gnome
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: quay.io/almalinuxorg/almalinux-bootc
+image-version: 10-kitten # latest is also supported if you want new updates ASAP
+
+# module configuration, executed in order
+# you can include multiple instances of the same module
+modules:
+  - from-file: common.yml
+
+  - type: script
+    snippets:
+      - dnf install -x plasma-discover-packagekit @"KDE Plasma Workspaces" falkon
+      - sed -i \
+        's,Image=Next,Image=Alma-default,g' \
+        /usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/defaults
+      - sed -i \
+        's,Image=Next,Image=Alma-default,g' \
+        /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop/contents/defaults
+      - sed -i \
+        's,Image=Next,Image=Alma-default,g' \
+        /usr/share/plasma/look-and-feel/org.kde.breezetwilight.desktop/contents/defaults
+      - sed -i \
+        's,start-here-kde-symbolic,fedora-logo-icon,g' \
+        /usr/share/plasma/plasmoids/org.kde.plasma.kickoff/contents/config/main.xml
+      - sed -i \
+        's,background=/usr/share/wallpapers/Next/contents/images/5120x2880.png,background=/usr/share/wallpapers/Alma-default/contents/images/3840x2160.png,g' \
+        /usr/share/sddm/themes/breeze/theme.conf
+      - systemctl enable sddm
