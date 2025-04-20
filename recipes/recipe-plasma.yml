@@ -3,7 +3,7 @@
 # image will be published to ghcr.io/<user>/<name>
 name: blueshift_v3-plasma
 # description will be included in the image's metadata
-description: AlmaLinux 10 Atomic Workstation with Gnome
+description: AlmaLinux 10 Atomic Workstation with Plasma
 
 # the base image to build on top of (FROM) and the version tag to use
 base-image: quay.io/almalinuxorg/almalinux-bootc
