@@ -16,7 +16,7 @@ modules:
 
   - type: script
     snippets:
-      - dnf install -x plasma-discover-packagekit @"KDE Plasma Workspaces" falkon
+      - dnf install -y -x plasma-discover-packagekit @"KDE Plasma Workspaces" falkon
       - sed -i \
         's,Image=Next,Image=Alma-default,g' \
         /usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/defaults
