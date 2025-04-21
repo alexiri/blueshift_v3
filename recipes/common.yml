@@ -7,12 +7,9 @@ modules:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
-  - type: rpm-ostree
-    install:
-      - epel-release
-
   - type: script
     snippets:
+      - dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
       - crb enable
       - rpm --import /etc/pki/rpm-gpg/*
       - dnf remove -y console-login-helper-messages
