@@ -88,7 +88,7 @@ jobs:
       #     sudo bluebuild generate-iso --iso-name blueshift_v3.iso image ghcr.io/${{ github.repository_owner }}/blueshift_v3:10
 
       - name: Build ISO
-        uses: alexiri/build-container-installer@alma
+        uses: alexiri/build-container-installer@pr-1
         id: build_iso
         with:
           arch: x86_64
