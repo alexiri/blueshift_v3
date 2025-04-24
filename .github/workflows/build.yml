@@ -114,8 +114,7 @@ jobs:
       - name: Upload ISO as artifact
         id: upload
         uses: actions/upload-artifact@v4
-        needs: build_iso
-        if: needs.build_iso.outputs.iso_path
+        if: ${{ steps.build_iso.outputs.iso_path }}
         with:
           name: ${{ steps.build_iso.outputs.iso_name }}
           path: |
