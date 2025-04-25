@@ -44,7 +44,6 @@ jobs:
         uses: alexiri/update-image-action@main
         with:
           imageref: ghcr.io/${{ github.repository_owner }}/${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}
-          baseref: quay.io/almalinuxorg/almalinux-bootc:10-kitten
 
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
