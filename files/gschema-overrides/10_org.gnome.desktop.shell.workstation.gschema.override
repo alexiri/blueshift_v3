@@ -1,0 +1,2 @@
+[org.gnome.shell]
+enabled-extensions=['background-logo@fedorahosted.org', 'appindicatorsupport@rgcjonas.gmail.com', 'ding@rastersoft.com', 'window-list@gnome-shell-extensions.gcampax.github.com', 'blur-my-shell@aunetx']

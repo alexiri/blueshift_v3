@@ -18,3 +18,15 @@ modules:
     snippets:
       - dnf install -y @Workstation
       - systemctl enable gdm
+
+  - type: gnome-extensions
+    install:
+      - AppIndicator and KStatusNotifierItem Support
+      - 307 # Dash-to-Dock https://extensions.gnome.org/extension/307/dash-to-dock/
+      - Desktop Icons
+
+  - type: gschema-overrides
+    include:
+      - 10_org.gnome.desktop.shell.workstation.gschema.override
+      - 10_org.fedorahosted.background-logo-extension.workstation.gschema.override
+      - 10_org.gnome.desktop.wm.preferences.workstation.gschema.override
