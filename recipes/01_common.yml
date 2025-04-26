@@ -29,6 +29,7 @@ modules:
       install:
         - org.mozilla.firefox
         - org.gnome.Loupe
+        - io.github.dvlv.boxbuddyrs
       remove:
         - org.gnome.eog
     user: {} # Also add Flathub user repo, but no user packages

@@ -26,6 +26,7 @@ modules:
       - AppIndicator and KStatusNotifierItem Support
       - 307 # Dash-to-Dock https://extensions.gnome.org/extension/307/dash-to-dock/
       - Desktop Icons NG (DING)
+      - Blur my Shell
 
   - type: gschema-overrides
     include:
