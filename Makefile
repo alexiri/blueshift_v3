@@ -8,7 +8,7 @@ IMAGE_NAME ?= localhost/almalinux-$(VARIANT)
 IMAGE_TAG ?= latest
 SOURCE_IMAGE_REF ?= $(IMAGE_NAME):$(IMAGE_TAG)
 IMAGE_TYPE ?= iso
-IMAGE_CONFIG ?= iso.toml
+IMAGE_CONFIG ?= iso/iso.toml
 UPDATE_IMAGE_REF ?= localhost/almalinux-$(VARIANT):$(IMAGE_TAG)
 
 QEMU_DISK_RAW ?= ./output/disk.raw
@@ -97,3 +97,33 @@ run-qemu-iso:
 		-boot d \
 		-cdrom $(QEMU_ISO) \
 		-hda $(QEMU_DISK_RAW)
+
+run-qemu:
+	qemu-system-x86_64 \
+		-M accel=kvm \
+		-cpu host \
+		-smp 2 \
+		-m 4096 \
+		-bios /usr/share/OVMF/x64/OVMF.4m.fd \
+		-serial stdio \
+		-hda $(QEMU_DISK_RAW)
+
+
+installer:
+	[ -e AlmaLinux-10-latest-beta-$(ARCH)-boot.iso ] || curl \
+		-L \
+		https://linuxsoft.cern.ch/almalinux-vault/10.0-beta/BaseOS/$(ARCH)/os/images/boot.iso \
+		-o AlmaLinux-10-latest-beta-$(ARCH)-boot.iso
+
+	$(PODMAN) run \
+		--rm \
+		-it \
+		--privileged \
+		--security-opt label=type:unconfined_t \
+		-v ${PWD}:/pwd:z \
+		-e ARCH=$(ARCH) \
+		-e MAJOR=$(MAJOR) \
+		-e VARIANT=$(VARIANT) \
+		--entrypoint /bin/bash \
+		quay.io/almalinuxorg/almalinux-bootc:10-kitten \
+		/pwd/installer-patch.sh
