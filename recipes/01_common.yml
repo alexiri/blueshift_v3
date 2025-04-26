@@ -13,6 +13,8 @@ modules:
   - type: script
     snippets:
       - dnf install -y firewalld
+  - type: script
+    snippets:
       - sed -i \
         's,DefaultZone=public,DefaultZone=Workstation,g' \
         /etc/firewalld/firewalld.conf
