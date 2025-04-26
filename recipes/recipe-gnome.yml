@@ -18,12 +18,10 @@ modules:
     snippets:
       - dnf install -y @Workstation
       - systemctl enable gdm
-
-  - type: gnome-extensions
-    install:
-      - AppIndicator and KStatusNotifierItem Support
-      - 307 # Dash-to-Dock https://extensions.gnome.org/extension/307/dash-to-dock/
-      - Desktop Icons
+      - dnf install -y \
+          gnome-shell-extension-appindicator \
+          gnome-shell-extension-dash-to-dock \
+          gnome-shell-extension-desktop-icons
 
   - type: gschema-overrides
     include:
