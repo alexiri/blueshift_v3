@@ -18,9 +18,8 @@ modules:
     snippets:
       - dnf install -y @Workstation
       - systemctl enable gdm
-      - dnf install -y \
-          @"Development Tools" \
-          distrobox
+      - dnf install -y distrobox
+      - dnf install -y '@Development Tools'
 
   - type: gnome-extensions
     install:
