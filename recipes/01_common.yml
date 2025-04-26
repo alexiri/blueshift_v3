@@ -2,25 +2,12 @@
 modules:
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
 
-  - type: files
-    files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
-
   - type: script
     snippets:
       - dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
       - crb enable
       - rpm --import /etc/pki/rpm-gpg/*
       - dnf remove -y console-login-helper-messages
-
-  # Set up mutable directories
-  - type: script
-    snippets:
-      - mv /opt /var/
-      - ln -s /var/opt /opt
-      - mv /usr/local /var/usrlocal
-      - ln -s /var/usrlocal /usr/local
 
   # Set up firewall
   - type: script

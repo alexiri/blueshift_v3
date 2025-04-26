@@ -12,7 +12,7 @@ image-version: 10-kitten # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
-  - from-file: common.yml
+  - from-file: 01_common.yml
 
   - type: script
     snippets:
@@ -34,8 +34,4 @@ modules:
       - 10_org.fedorahosted.background-logo-extension.workstation.gschema.override
       - 10_org.gnome.desktop.wm.preferences.workstation.gschema.override
 
-  # Linting
-  - type: script
-    snippets:
-      - dnf clean all
-      - bootc container lint --fatal-warnings || true
+  - from-file: 02_common.yml

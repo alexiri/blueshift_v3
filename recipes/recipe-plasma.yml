@@ -12,7 +12,7 @@ image-version: 10-kitten # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
-  - from-file: common.yml
+  - from-file: 01_common.yml
 
   - type: script
     snippets:
@@ -34,8 +34,4 @@ modules:
         /usr/share/sddm/themes/breeze/theme.conf || true
       - systemctl enable sddm
 
-  # Linting
-  - type: script
-    snippets:
-      - dnf clean all
-      - bootc container lint --fatal-warnings || true
+  - from-file: 02_common.yml

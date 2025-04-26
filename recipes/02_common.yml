@@ -1,0 +1,20 @@
+---
+modules:
+  - type: files
+    files:
+      - source: system
+        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+
+  # Set up mutable directories
+  - type: script
+    snippets:
+      - mv /opt /var/
+      - ln -s /var/opt /opt
+      - mv /usr/local /var/usrlocal
+      - ln -s /var/usrlocal /usr/local
+
+  # Linting
+  - type: script
+    snippets:
+      - dnf clean all
+      - bootc container lint --fatal-warnings || true
