@@ -13,8 +13,7 @@ modules:
   - type: script
     snippets:
       - dnf install -y firewalld
-  - type: script
-    snippets:
+      - systemctl enable --now firewalld # so it creates the config files
       - sed -i \
         's,DefaultZone=public,DefaultZone=Workstation,g' \
         /etc/firewalld/firewalld.conf
