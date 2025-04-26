@@ -33,3 +33,9 @@ modules:
         's,background=/usr/share/wallpapers/Next/contents/images/5120x2880.png,background=/usr/share/wallpapers/Alma-default/contents/images/3840x2160.png,g' \
         /usr/share/sddm/themes/breeze/theme.conf || true
       - systemctl enable sddm
+
+  # Linting
+  - type: script
+    snippets:
+      - dnf clean all
+      - bootc container lint --fatal-warnings || true

@@ -14,6 +14,27 @@ modules:
       - rpm --import /etc/pki/rpm-gpg/*
       - dnf remove -y console-login-helper-messages
 
+  # Set up mutable directories
+  - type: script
+    snippets:
+      - mv /opt /var/
+      - ln -s /var/opt /opt
+      - mv /usr/local /var/usrlocal
+      - ln -s /var/usrlocal /usr/local
+
+  # Set up firewall
+  - type: script
+    snippets:
+      - dnf install -y firewall-config
+      - sed -i \
+        's,DefaultZone=public,DefaultZone=Workstation,g' \
+        /etc/firewalld/firewalld.conf
+
+  # Hardware support
+  - type: script
+    snippets:
+      - dnf install -y nss-mdns
+
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
     system:

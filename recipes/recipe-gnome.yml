@@ -18,6 +18,9 @@ modules:
     snippets:
       - dnf install -y @Workstation
       - systemctl enable gdm
+      - dnf install -y \
+          @"Development Tools" \
+          distrobox
 
   - type: gnome-extensions
     install:
@@ -30,3 +33,9 @@ modules:
       - 10_org.gnome.desktop.shell.workstation.gschema.override
       - 10_org.fedorahosted.background-logo-extension.workstation.gschema.override
       - 10_org.gnome.desktop.wm.preferences.workstation.gschema.override
+
+  # Linting
+  - type: script
+    snippets:
+      - dnf clean all
+      - bootc container lint --fatal-warnings || true
