@@ -85,7 +85,7 @@ run-qemu-qcow:
 
 run-qemu-iso:
 	# Make a disk to install to
-	[[ ! -e $(QEMU_DISK_RAW) ]] && dd if=/dev/null of=$(QEMU_DISK_RAW) bs=1M seek=10240
+	[[ ! -e $(QEMU_DISK_RAW) ]] && dd if=/dev/null of=$(QEMU_DISK_RAW) bs=1M seek=20480
 
 	qemu-system-x86_64 \
 		-M accel=kvm \
