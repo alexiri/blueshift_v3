@@ -66,30 +66,61 @@ jobs:
       #     # Build the ISO image
       #     sudo bluebuild generate-iso --iso-name blueshift_v3.iso image ghcr.io/${{ github.repository_owner }}/blueshift_v3:10
 
+      # - name: Build ISO
+      #   uses: alexiri/build-container-installer@pr-1
+      #   id: build_iso
+      #   if: ${{ steps.check_update.outputs.rebuild-needed == 'true' || inputs.FORCE_REBUILD }}
+      #   with:
+      #     arch: x86_64
+      #     image_name: ${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}
+      #     image_repo: ghcr.io/${{ github.repository_owner }}
+      #     image_tag: 10
+      #     version: 10
+      #     # version: ${{ env.VERSION }}
+      #     # variant: ${{ env.VARIANT }}
+      #     iso_name: blueshift_v3-${{ matrix.variant }}-10.iso
+
       - name: Build ISO
-        uses: alexiri/build-container-installer@pr-1
-        id: build_iso
-        if: ${{ steps.check_update.outputs.rebuild-needed == 'true' || inputs.FORCE_REBUILD }}
+        id: build
+        uses: ublue-os/titanoboa@anaconda-webui-format
         with:
-          arch: x86_64
-          image_name: ${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}
-          image_repo: ghcr.io/${{ github.repository_owner }}
-          image_tag: 10
-          version: 10
-          # version: ${{ env.VERSION }}
-          # variant: ${{ env.VARIANT }}
-          iso_name: blueshift_v3-${{ matrix.variant }}-10.iso
+          image-ref: ghcr.io/${{ github.repository_owner }}/${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}:10
+          # flatpaks-list: ${{ github.workspace }}/system_files/etc/ublue-os/system-flatpaks.list
+          hook-post-rootfs: ${{ github.workspace }}/iso/configure_iso.sh
+
+      - name: Rename ISO
+        id: rename
+        env:
+          OUTPUT_PATH: ${{ steps.build.outputs.iso-dest }}
+          IMAGE_NAME: ${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}-live
+          PLATFORM: amd64
+          DEFAULT_TAG: 10
+        run: |
+          set -x
+          mkdir -p output
+          OUTPUT_DIRECTORY="$(realpath output)"
+          if [ $PLATFORM == "amd64" ]; then
+            sha256sum "${OUTPUT_PATH}" | tee "${OUTPUT_DIRECTORY}/${IMAGE_NAME}-${DEFAULT_TAG}.iso-CHECKSUM"
+            mv "${OUTPUT_PATH}" "${OUTPUT_DIRECTORY}/${IMAGE_NAME}-${DEFAULT_TAG}.iso"
+          else
+            sha256sum "${OUTPUT_PATH}" | tee "${OUTPUT_DIRECTORY}/${IMAGE_NAME}-${DEFAULT_TAG}-${PLATFORM}.iso-CHECKSUM"
+            mv "${OUTPUT_PATH}" "${OUTPUT_DIRECTORY}/${IMAGE_NAME}-${DEFAULT_TAG}-${PLATFORM}.iso"
+          fi
+          echo "output_directory=$OUTPUT_DIRECTORY" >> "${GITHUB_OUTPUT}"
 
       # This example is for uploading your ISO as a Github artifact. You can do something similar using any cloud storage, so long as you copy the output
       - name: Upload ISO as artifact
         id: upload
         uses: actions/upload-artifact@v4
-        if: ${{ steps.build_iso.outputs.iso_path }}
+        # if: ${{ steps.build_iso.outputs.iso_path }}
+        if: ${{ steps.rename.outputs.output_directory }}
         with:
-          name: ${{ steps.build_iso.outputs.iso_name }}
-          path: |
-            ${{ steps.build_iso.outputs.iso_path }}
-            ${{ steps.build_iso.outputs.iso_path }}-CHECKSUM
+          # name: ${{ steps.build_iso.outputs.iso_name }}
+          # path: |
+          #   ${{ steps.build_iso.outputs.iso_path }}
+          #   ${{ steps.build_iso.outputs.iso_path }}-CHECKSUM
+          name: ${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}-10-amd64-iso
+          path: ${{ steps.rename.outputs.output_directory }}
           if-no-files-found: error
           retention-days: 0
           compression-level: 0
