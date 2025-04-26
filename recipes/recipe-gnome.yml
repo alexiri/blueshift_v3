@@ -26,7 +26,7 @@ modules:
     install:
       - AppIndicator and KStatusNotifierItem Support
       - 307 # Dash-to-Dock https://extensions.gnome.org/extension/307/dash-to-dock/
-      - 1465 # Desktop Icons https://extensions.gnome.org/extension/1465/desktop-icons/
+      - Desktop Icons NG (DING)
 
   - type: gschema-overrides
     include:
