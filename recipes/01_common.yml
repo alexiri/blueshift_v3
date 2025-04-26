@@ -12,7 +12,7 @@ modules:
   # Set up firewall
   - type: script
     snippets:
-      - dnf install -y firewall-config
+      - dnf install -y firewalld
       - sed -i \
         's,DefaultZone=public,DefaultZone=Workstation,g' \
         /etc/firewalld/firewalld.conf
