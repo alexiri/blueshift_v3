@@ -124,10 +124,3 @@ jobs:
           if-no-files-found: error
           retention-days: 0
           compression-level: 0
-
-      - name: Write summary
-        id: summary
-        if: ${{ steps.upload.outputs.artifact-url }}
-        shell: bash
-        run: |
-          echo "- ISO: ${{ steps.upload.outputs.artifact-url }} (${{ steps.upload.outputs.artifact-digest }})" >> $GITHUB_STEP_SUMMARY
