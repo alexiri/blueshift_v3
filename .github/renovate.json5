@@ -44,12 +44,12 @@
         'recipe.*.yml$',
       ],
       matchStrings: [
-        'image-version:\\s*(?<currentValue>\\S+)\\s*#\\s*\\((?<currentDigest>\\S+)\\)',
+        'image-version:\\s*(?<currentValue>\\S+)@(?<currentDigest>\\S+)',
       ],
       datasourceTemplate: 'docker',
       depNameTemplate: 'quay.io/almalinuxorg/almalinux-bootc',
       versioningTemplate: 'docker',
-      autoReplaceStringTemplate: 'image-version: {{{newValue}}} # ({{{newDigest}}})',
+      autoReplaceStringTemplate: 'image-version: {{{newValue}}}@{{{newDigest}}}',
     },
   ],
 }

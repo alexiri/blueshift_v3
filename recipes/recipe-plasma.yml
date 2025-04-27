@@ -7,7 +7,7 @@ description: AlmaLinux 10 Atomic Workstation with Plasma
 
 # the base image to build on top of (FROM) and the version tag to use
 base-image: quay.io/almalinuxorg/almalinux-bootc
-image-version: 10-kitten # (sha256:de30d10ace94b373a9cc3e05b0295b81972061ec25275a341102d71db3f052c0)
+image-version: 10-kitten@sha256:de30d10ace94b373a9cc3e05b0295b81972061ec25275a341102d71db3f052c0
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
