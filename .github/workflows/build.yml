@@ -1,21 +1,11 @@
 name: bluebuild
 on:
-  schedule:
-    - cron:
-        "00 06 * * *" # build at 06:00 UTC every day
-        # (20 minutes after last ublue images start building)
   push:
     paths-ignore: # don't rebuild if only documentation has changed
       - "**.md"
 
   pull_request:
   workflow_dispatch: # allow manually triggering builds
-    inputs:
-      FORCE_REBUILD:
-        description: "Force rebuild even if no changes were made"
-        required: false
-        default: false
-        type: boolean
 
 concurrency:
   # only run one build at a time
@@ -38,17 +28,9 @@ jobs:
           - gnome
           - plasma
     steps:
-      - name: Check updates
-        id: check_update
-        if: ${{ ! inputs.FORCE_REBUILD }}
-        uses: alexiri/update-image-action@52bde4020db58963019b4fb0bbed5d21cdf39f07 # 1.0
-        with:
-          imageref: ghcr.io/${{ github.repository_owner }}/${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}
-
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
         #if: false # temporarily disable this step
-        if: ${{ steps.check_update.outputs.rebuild-needed == 'true' || inputs.FORCE_REBUILD }}
         uses: blue-build/github-action@4d8b4df657ec923574611eec6fd7e959416c47f0 # v1.8
         with:
           recipe: recipe-${{ matrix.variant }}.yml
@@ -69,7 +51,6 @@ jobs:
       # - name: Build ISO
       #   uses: alexiri/build-container-installer@pr-1
       #   id: build_iso
-      #   if: ${{ steps.check_update.outputs.rebuild-needed == 'true' || inputs.FORCE_REBUILD }}
       #   with:
       #     arch: x86_64
       #     image_name: ${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}
@@ -82,7 +63,6 @@ jobs:
 
       - name: Build ISO
         id: build
-        if: ${{ steps.check_update.outputs.rebuild-needed == 'true' || inputs.FORCE_REBUILD }}
         uses: ublue-os/titanoboa@anaconda-webui-format
         with:
           image-ref: ghcr.io/${{ github.repository_owner }}/${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}:10
