@@ -14,12 +14,18 @@ image-version: 10-kitten # (sha256:de30d10ace94b373a9cc3e05b0295b81972061ec25275
 modules:
   - from-file: 01_common.yml
 
+  - type: dnf
+    group-install:
+      packages:
+        - workstation-product-environment
+        - development
+    install:
+      packages:
+        - distrobox
+
   - type: script
     snippets:
-      - dnf install -y @Workstation
       - systemctl enable gdm
-      - dnf install -y distrobox
-      - dnf install -y '@Development Tools'
 
   - type: default-flatpaks
     notify: true # Send notification after install/uninstall is finished (true/false)
