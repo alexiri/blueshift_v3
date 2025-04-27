@@ -82,6 +82,7 @@ jobs:
 
       - name: Build ISO
         id: build
+        if: ${{ steps.check_update.outputs.rebuild-needed == 'true' || inputs.FORCE_REBUILD }}
         uses: ublue-os/titanoboa@anaconda-webui-format
         with:
           image-ref: ghcr.io/${{ github.repository_owner }}/${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}:10
