@@ -41,7 +41,7 @@ jobs:
       - name: Check updates
         id: check_update
         if: ${{ ! inputs.FORCE_REBUILD }}
-        uses: alexiri/update-image-action@1.0
+        uses: alexiri/update-image-action@52bde4020db58963019b4fb0bbed5d21cdf39f07 # 1.0
         with:
           imageref: ghcr.io/${{ github.repository_owner }}/${{ matrix.variant == 'gnome' && 'blueshift_v3' || 'blueshift_v3-plasma' }}
 
