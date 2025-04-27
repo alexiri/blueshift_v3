@@ -22,7 +22,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["recipe-*.yml$"],
+      "fileMatch": ["recipe.*\.yml$"],
       "matchStrings": [
         "image-version:\\s*(?<currentValue>.+)"
       ],
