@@ -1,40 +1,55 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:best-practices',
   ],
-
-  "rebaseWhen": "never",
-
-  "packageRules": [
+  rebaseWhen: 'never',
+  packageRules: [
     {
-      "automerge": true,
-      "matchUpdateTypes": ["pin", "pinDigest"]
-    },
-    {
-      "enabled": false,
-      "matchUpdateTypes": ["digest", "pinDigest", "pin"],
-      "matchDepTypes": ["container"],
-      "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
-    },
-    {
-      "matchManagers": ["regex"],
-      "matchUpdateTypes": ["digest"],
-      "automerge": true
-    }
-  ],
-
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": ["recipe.*\.yml$"],
-      "matchStrings": [
-        "image-version:\\s*(?<currentValue>\\S+)\\s*#\\s*\\((?<currentDigest>\\S+)\\)"
+      automerge: true,
+      matchUpdateTypes: [
+        'pin',
+        'pinDigest',
       ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "quay.io/almalinuxorg/almalinux-bootc",
-      "versioningTemplate": "docker",
-      "autoReplaceStringTemplate": "image-version: {{{newValue}}} # ({{{newDigest}}})",
-    }
-  ]
+    },
+    {
+      enabled: false,
+      matchUpdateTypes: [
+        'digest',
+        'pinDigest',
+        'pin',
+      ],
+      matchDepTypes: [
+        'container',
+      ],
+      matchFileNames: [
+        '.github/workflows/**.yaml',
+        '.github/workflows/**.yml',
+      ],
+    },
+    {
+      matchManagers: [
+        'custom.regex',
+      ],
+      matchUpdateTypes: [
+        'digest',
+      ],
+      automerge: true,
+    },
+  ],
+  customManagers: [
+    {
+      customType: 'regex',
+      fileMatch: [
+        'recipe.*.yml$',
+      ],
+      matchStrings: [
+        'image-version:\\s*(?<currentValue>\\S+)\\s*#\\s*\\((?<currentDigest>\\S+)\\)',
+      ],
+      datasourceTemplate: 'docker',
+      depNameTemplate: 'quay.io/almalinuxorg/almalinux-bootc',
+      versioningTemplate: 'docker',
+      autoReplaceStringTemplate: 'image-version: {{{newValue}}} # ({{{newDigest}}})',
+    },
+  ],
 }
