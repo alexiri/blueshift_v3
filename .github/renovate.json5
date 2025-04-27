@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+  ],
+
+  "rebaseWhen": "never",
+
+  "packageRules": [
+    {
+      "automerge": true,
+      "matchUpdateTypes": ["pin", "pinDigest"]
+    },
+    {
+      "enabled": false,
+      "matchUpdateTypes": ["digest", "pinDigest", "pin"],
+      "matchDepTypes": ["container"],
+      "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
+    }
+  ],
+
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["/recipies/*.yml$"],
+      "matchStrings": [
+        "image-version:\\s*(?<currentValue>.+)"
+      ],
+      "datasourceTemplate": "docker",
+      "depName": "quay.io/almalinuxorg/almalinux-bootc",
+      "versioningTemplate": "docker"
+    }
+  ]
+}
