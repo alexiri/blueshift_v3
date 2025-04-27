@@ -16,6 +16,11 @@
       "matchUpdateTypes": ["digest", "pinDigest", "pin"],
       "matchDepTypes": ["container"],
       "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
+    },
+    {
+      "matchManagers": ["custom"],
+      "matchUpdateTypes": ["digest"],
+      "automerge": true
     }
   ],
 
@@ -30,7 +35,6 @@
       "depNameTemplate": "quay.io/almalinuxorg/almalinux-bootc",
       "versioningTemplate": "docker",
       "autoReplaceStringTemplate": "image-version: {{{newValue}}} # ({{{newDigest}}})",
-      "automerge": true,
     }
   ]
 }
