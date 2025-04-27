@@ -21,12 +21,20 @@ modules:
       - dnf install -y distrobox
       - dnf install -y '@Development Tools'
 
-  - type: gnome-extensions
-    install:
-      - AppIndicator and KStatusNotifierItem Support
-      - 307 # Dash-to-Dock https://extensions.gnome.org/extension/307/dash-to-dock/
-      - Desktop Icons NG (DING)
-      - Blur my Shell
+  - type: script
+    snippets:
+      - dnf install -y \
+          gnome-shell-extension-blur-my-shell \
+          gnome-shell-extension-desktop-icons-ng \
+          gnome-shell-extension-dash-to-panel \
+          gnome-shell-extension-appindicator
+
+  # - type: gnome-extensions
+  #   install:
+  #     - AppIndicator and KStatusNotifierItem Support
+  #     - 307 # Dash-to-Dock https://extensions.gnome.org/extension/307/dash-to-dock/
+  #     - Desktop Icons NG (DING)
+  #     - Blur my Shell
 
   - type: gschema-overrides
     include:
