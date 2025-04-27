@@ -90,6 +90,7 @@ jobs:
           hook-post-rootfs: ${{ github.workspace }}/iso/configure_iso.sh
 
       - name: Rename ISO
+        if: ${{ steps.build.outputs.iso-dest }}
         id: rename
         env:
           OUTPUT_PATH: ${{ steps.build.outputs.iso-dest }}
