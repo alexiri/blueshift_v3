@@ -27,7 +27,7 @@
         "image-version:\\s*(?<currentValue>.+)"
       ],
       "datasourceTemplate": "docker",
-      "depName": "quay.io/almalinuxorg/almalinux-bootc",
+      "depNameTemplate": "quay.io/almalinuxorg/almalinux-bootc",
       "versioningTemplate": "docker"
     }
   ]
