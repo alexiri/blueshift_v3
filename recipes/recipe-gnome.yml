@@ -21,9 +21,11 @@ modules:
       - dnf install -y distrobox
       - dnf install -y '@Development Tools'
 
-  - type: script
-    snippets:
-      - dnf install -y gnome-extensions-app
+  - type: default-flatpaks
+    notify: true # Send notification after install/uninstall is finished (true/false)
+    system:
+      install:
+        - com.mattjakeman.ExtensionManager
 
   - type: gnome-extensions
     install:

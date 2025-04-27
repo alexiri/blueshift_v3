@@ -28,8 +28,10 @@ modules:
       # If no repo information is specified, Flathub will be used by default
       install:
         - org.mozilla.firefox
+        - org.mozilla.Thunderbird
         - org.gnome.Loupe
         - io.github.dvlv.boxbuddyrs
+        - com.vscodium.codium
       remove:
         - org.gnome.eog
     user: {} # Also add Flathub user repo, but no user packages
