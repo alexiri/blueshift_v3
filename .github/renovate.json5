@@ -40,8 +40,8 @@
   customManagers: [
     {
       customType: 'regex',
-      fileMatch: [
-        'recipe.*.yml$',
+      managerFilePatterns: [
+        '/recipe.*.yml$/',
       ],
       matchStrings: [
         'image-version:\\s*(?<currentValue>\\S+)\\s*#\\s*\\((?<currentDigest>\\S+)\\)',
